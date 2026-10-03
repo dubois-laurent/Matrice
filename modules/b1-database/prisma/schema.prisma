@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +5,96 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+enum Period {
+  am
+  pm
+
+  @@map("period")
+}
+
+enum StudentGroup {
+  A
+  B
+  Promotion
+
+  @@map("student_group")
+}
+
+enum Mode {
+  DG
+  CE
+  AUTO
+
+  @@map("mode")
+}
+
+enum Domain {
+  web
+  data
+  cyber
+  projet
+
+  @@map("domain")
+}
+
+enum SessionStatus {
+  proposed
+  confirmed
+
+  @@map("session_status")
+}
+
+model Teacher {
+  id       Int       @id @default(autoincrement())
+  code     String    @unique
+  name     String
+  sessions Session[]
+
+  @@map("teachers")
+}
+
+model Week {
+  id        Int       @id @default(autoincrement())
+  startDate DateTime  @unique @map("start_date") @db.Date
+  sessions  Session[]
+
+  @@map("weeks")
+}
+
+model Session {
+  id           Int           @id @default(autoincrement())
+  code         String        @unique
+  weekId       Int           @map("week_id")
+  date         DateTime      @db.Date
+  period       Period
+  studentGroup StudentGroup  @map("student_group")
+  mode         Mode
+  title        String
+  domain       Domain
+  teacherId    Int?          @map("teacher_id")
+  status       SessionStatus @default(proposed)
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  week    Week     @relation(fields: [weekId], references: [id], onDelete: Restrict)
+  teacher Teacher? @relation(fields: [teacherId], references: [id], onDelete: Restrict)
+  acquis  Acquis[]
+
+  @@unique([teacherId, date, period])
+  @@index([weekId, date, period])
+  @@map("sessions")
+}
+
+model Acquis {
+  id          Int       @id @default(autoincrement())
+  sessionId   Int       @map("session_id")
+  label       String
+  validated   Boolean   @default(false)
+  validatedAt DateTime? @map("validated_at")
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("acquis")
 }
