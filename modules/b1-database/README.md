@@ -14,6 +14,6 @@ npm --version
 POSTGRES_USER=lolo
 POSTGRES_PASSWORD=cuicui
 POSTGRES_DB=matrice_b1
-DATABASE_URL=postgresql://lolo:cuicui@localhost:5433/matrice_b1?schema=public
+DATABASE_URL=postgresql://lolo:cuicui@localhost:5432/matrice_b1?schema=public
 
 ```

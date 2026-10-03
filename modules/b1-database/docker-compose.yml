@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:16-alpine
     container_name: postgres_container_module_b1
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
