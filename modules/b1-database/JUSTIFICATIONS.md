@@ -2,7 +2,7 @@
 
 - PostgreSQL
 - Docker
-- Node.js / Prisma / Typescript
+- Node.js / Prisma / Typescript / Zod
 
 
 ### 2 // Plan d'implémentation 
@@ -201,5 +201,26 @@ Foreign-key constraints:
     "sessions_week_id_fkey" FOREIGN KEY (week_id) REFERENCES weeks(id) ON UPDATE CASCADE ON DELETE RESTRICT     
 Referenced by:
     TABLE "acquis" CONSTRAINT "acquis_session_id_fkey" FOREIGN KEY (session_id) REFERENCES sessions(id) ON UPDATE CASCADE ON DELETE CASCADE
+
+```
+
+## Commit 4 - Seed
+
+J'ai récupéré le jeu de données fourni pour l'insérer dans la base. 
+
+Voir le fichier **prisma/seed.ts**.
+
+Afin de pouvoir éxécuter la commande *npx prisma db seed* , J'ai ajouter un script "seed" dans le fichier **prisma.config.ts** afin de lancer *prima/seed.ts* via **tsx** (runtime)
+
+```sh
+
+PS C:\Users\wtzmo\code\Matrice\modules\b1-database> npx prisma db seed
+Loaded Prisma config from prisma.config.ts.
+
+Running seed command `tsx prisma/seed.ts` ...
+Test seed : 3 formateurs, 6 sessions, 5 acquis
+Seed OK.
+
+The seed command has been executed.
 
 ```
