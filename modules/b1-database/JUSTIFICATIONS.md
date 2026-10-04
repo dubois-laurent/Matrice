@@ -225,7 +225,7 @@ The seed command has been executed.
 
 ```
 
-## Commit 5 
+## Commit 5 🧪 Operations / Zod / Vitest
 
 Ajout des opérations **src/operation.ts**, des validators zod **src/schemas.ts** et des tests vitest **tests/operations.test.ts**
 
@@ -295,3 +295,7 @@ PS C:\Users\wtzmo\code\Matrice\modules\b1-database> npm test
    Duration  2.38s (tests 65%, import 22%, transform 13%, worker 1%)
 
    ```
+
+   ## Commit 6 
+
+   

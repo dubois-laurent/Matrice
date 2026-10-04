@@ -27,7 +27,7 @@ Pas de contenus touchés dans ce commit, je me suis embrouillé tout seul au niv
 
 RAS
 
-## Commit 5
+## Commit 5 🧪 Operations / Zod / Vitest
 
 # Contenus générés par Claude dans ce commit :
 
@@ -37,6 +37,15 @@ RAS
 # Contenus vérifiés et corrigés :
 
 - src/operations.ts (Voir ligne 232 de JUSTIFICATIONS.md)
+
+## Commit 6 
+
+# Contenus générés :
+
+- tests/concurrency.test.ts
+- tests/constraints.test.ts
+
+L'IA fait les tests parfaitement.. Et Vitest est simple à lire donc je me suis permis.
 
 
 
