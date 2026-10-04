@@ -11,9 +11,9 @@ const prisma = new PrismaClient({ adapter });
 
 // Voici le jeu de données pour les enseignants, les sessions et les acquis, implémenté en constantes
 const teachers = [
-    { code: "T1", name: "Camille Exemple" },
-    { code: "T2", name: "Alex Démonstration" },
-    { code: "T3", name: "Sam Fictif" },
+    { code: "t1", name: "Camille Exemple" },
+    { code: "t2", name: "Alex Démonstration" },
+    { code: "t3", name: "Sam Fictif" },
 ];
 
 const sessions = [
@@ -75,6 +75,13 @@ async function main() {
         });
         sessionsIds.set(session.code, createdSession.id);
     }
+
+
+    await prisma.acquis.deleteMany({
+        where: {
+            sessionId: { in: [ ...sessionsIds.values() ]}
+        }
+    });
 
     await prisma.acquis.createMany({
         data: acquis.map((a) => ({

@@ -2,7 +2,7 @@
 
 - PostgreSQL
 - Docker
-- Node.js / Prisma / Typescript / Zod
+- Node.js / Prisma / Typescript / Zod / Vitest
 
 
 ### 2 // Plan d'implémentation 
@@ -204,7 +204,7 @@ Referenced by:
 
 ```
 
-## Commit 4 - Seed
+## Commit 4 🌱 Seeding
 
 J'ai récupéré le jeu de données fourni pour l'insérer dans la base. 
 
@@ -224,3 +224,74 @@ Seed OK.
 The seed command has been executed.
 
 ```
+
+## Commit 5 
+
+Ajout des opérations **src/operation.ts**, des validators zod **src/schemas.ts** et des tests vitest **tests/operations.test.ts**
+
+J'ai eu quelques soucis au niveau de la date lorsque je créais des nouvelles sessions. Cela créait une toute nouvelle semaine selon la date entrée dans la session : Je ne pouvais pas retrouver la séance dans la semaine originale. Claude m'a éclaircit à ce sujet.
+
+```sh
+
+PS C:\Users\wtzmo\code\Matrice\modules\b1-database> npm test
+
+> b1-database@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.3 C:/Users/wtzmo/code/Matrice/modules/b1-database
+
+ ✓ tests/operations.test.ts (39 tests) 1296ms
+   ✓ créer une séance (3)
+     ✓ crée une séance proposée avec son formateur 99ms
+     ✓ accepte une séance AUTO sans formateur 33ms
+     ✓ rattache la séance au lundi de sa semaine 37ms
+   ✓ lister la semaine avec les formateurs (5)
+     ✓ retourne les séances du seed avec leur formateur 22ms
+     ✓ donne la même semaine quel que soit le jour demandé 18ms
+     ✓ groupe A : séances A + Promotion 18ms
+     ✓ groupe B : séances B + Promotion 11ms
+     ✓ trie par date puis par période 11ms
+   ✓ confirmer une affectation (5)
+     ✓ confirme une séance dont le formateur est déjà assigné 78ms
+     ✓ affecte un formateur au moment de confirmer 59ms
+     ✓ refuse de confirmer sans formateur 45ms
+     ✓ refuse de confirmer une séance AUTO 11ms
+     ✓ refuse une séance ou un formateur inconnu 16ms
+   ✓ un formateur ne peut pas avoir 2 séances sur le même créneau (3)
+     ✓ refuse la création d'une 2e séance au même créneau 83ms
+     ✓ refuse la confirmation qui créerait un conflit 44ms
+     ✓ autorise le même formateur sur une autre période 59ms
+   ✓ heures par formateur (3)
+     ✓ compte 4 h par séance confirmée 104ms
+     ✓ ne compte pas les séances proposées 9ms
+     ✓ retourne 0 h pour une semaine sans séance 4ms
+   ✓ acquis validés (3)
+     ✓ ne retourne que les acquis validés, avec leur date 55ms
+     ✓ sans filtre, retourne les acquis validés de toutes les séances 7ms
+     ✓ un acquis non validé n'a pas de date de validation 4ms
+   ✓ entrées invalides refusées (17)
+     ✓ période inconnue 4ms
+     ✓ groupe inconnu 3ms
+     ✓ mode inconnu 3ms
+     ✓ domaine inconnu 5ms
+     ✓ date impossible 4ms
+     ✓ date au mauvais format 5ms
+     ✓ titre vide 4ms
+     ✓ code vide 4ms
+     ✓ champs manquants 5ms
+     ✓ entrée qui n'est pas un objet 5ms
+     ✓ AUTO avec formateur 5ms
+     ✓ AUTO déjà confirmée 3ms
+     ✓ confirmée sans formateur 4ms
+     ✓ formateur inconnu 7ms
+     ✓ code déjà utilisé 24ms
+     ✓ refuse un acquis au libellé vide ou sur une séance inconnue 5ms
+     ✓ refuse une semaine invalide 1ms
+
+ Test Files  1 passed (1)
+      Tests  39 passed (39)
+   Start at  08:34:34
+   Duration  2.38s (tests 65%, import 22%, transform 13%, worker 1%)
+
+   ```
