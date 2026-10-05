@@ -1,0 +1,18 @@
+[
+  { "id": "d01", "jeu": "dev", "texte": "Composants React et propriétés", "categorie": "web" },
+  { "id": "d02", "jeu": "dev", "texte": "Styles CSS et responsive", "categorie": "web" },
+  { "id": "d03", "jeu": "dev", "texte": "Requêtes SQL et jointures", "categorie": "data" },
+  { "id": "d04", "jeu": "dev", "texte": "Nettoyage de données CSV", "categorie": "data" },
+  { "id": "d05", "jeu": "dev", "texte": "Authentification et droits", "categorie": "cyber" },
+  { "id": "d06", "jeu": "dev", "texte": "Détecter le phishing", "categorie": "cyber" },
+  { "id": "d07", "jeu": "dev", "texte": "Atelier libre", "categorie": "a_revoir" },
+  { "id": "d08", "jeu": "dev", "texte": "React et protection contre le phishing", "categorie": "a_revoir" },
+  { "id": "t01", "jeu": "evaluation", "texte": "Créer un composant React", "categorie": "web" },
+  { "id": "t02", "jeu": "evaluation", "texte": "Améliorer le responsive CSS", "categorie": "web" },
+  { "id": "t03", "jeu": "evaluation", "texte": "Analyser un CSV avec SQL", "categorie": "data" },
+  { "id": "t04", "jeu": "evaluation", "texte": "Contrôler la qualité des données", "categorie": "data" },
+  { "id": "t05", "jeu": "evaluation", "texte": "Limiter les droits après authentification", "categorie": "cyber" },
+  { "id": "t06", "jeu": "evaluation", "texte": "Reconnaître une tentative de phishing", "categorie": "cyber" },
+  { "id": "t07", "jeu": "evaluation", "texte": "Revue collective", "categorie": "a_revoir" },
+  { "id": "t08", "jeu": "evaluation", "texte": "", "categorie": "a_revoir" }
+]
