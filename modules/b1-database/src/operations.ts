@@ -59,11 +59,8 @@ export async function createSession(raw: unknown, db: PrismaClient = prisma) {
 
   // La semaine est déduite de la date : la séance ne peut pas être rattachée à la mauvaise semaine
   const startDate = mondayOf(input.date);
-  const week = await db.week.upsert({
-    where: { startDate },
-    update: {},
-    create: { startDate },
-  });
+  await db.week.createMany({ data: [{ startDate }], skipDuplicates: true });
+  const week = await db.week.findUniqueOrThrow({ where: { startDate } });
 
   try {
     return await db.session.create({

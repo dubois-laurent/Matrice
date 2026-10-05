@@ -231,6 +231,11 @@ Ajout des opérations **src/operation.ts**, des validators zod **src/schemas.ts*
 
 J'ai eu quelques soucis au niveau de la date lorsque je créais des nouvelles sessions. Cela créait une toute nouvelle semaine selon la date entrée dans la session : Je ne pouvais pas retrouver la séance dans la semaine originale. Claude m'a éclaircit à ce sujet.
 
+Ci-dessous le test des opérations. Ce test couvre:
+
+- Les 5 opérations (créer une séance, lister une semaine et ses formateurs, confirmer une affectation, calculer les heures par formateur, retrouver les acquis validés)
+- Le refus des entrées invalides
+
 ```sh
 
 PS C:\Users\wtzmo\code\Matrice\modules\b1-database> npm test
@@ -296,6 +301,54 @@ PS C:\Users\wtzmo\code\Matrice\modules\b1-database> npm test
 
    ```
 
-   ## Commit 6 
+## Commit 6 🧪 Concurrency / Constraints
 
-   
+Ajout des tests de concurrence **tests/concurrency.test.ts** et des tests de contraintes **tests/constraints.test.ts**.
+
+### Test de concurrence
+
+Les scénarios :
+
+- **8 confirmations simultanées** du même formateur sur le même créneau (8 connexions), répétées sur 5 créneaux : une seule réussit, les 7 autres sont refusées.
+- **6 créations simultanées** avec le même formateur et le même créneau : une seule réussit.
+- **5 créations simultanées avec le même code** : une seule réussit
+
+Et pour vérifier que la contrainte ne bloque pas à tort :
+
+- 3 formateurs différents sur le même créneau, en même temps : tous acceptés.
+- Le même formateur sur 5 créneaux différents, en même temps : tous acceptés.
+- 5 séances `AUTO` sans formateur sur le même créneau : toutes acceptées. En PostgreSQL, deux `NULL` ne sont pas égaux : une séance sans formateur ne bloque jamais personne.
+
+#### Un bug trouvé grâce à ce test
+
+Les deux derniers tests « pas de faux conflit » ont d'abord échoué. L'erreur n'était pas sur l'unicité du formateur mais sur `weeks_start_date_key` : quand plusieurs séances sont créées en même temps pour une **semaine qui n'existe pas encore**, `db.week.upsert` lit d'abord la semaine puis l'insère. Les requêtes la croient toutes absentes et l'insèrent toutes, et la contrainte unique de `weeks.start_date` en refuse une. Les tests séquentiels ne pouvaient pas le voir.
+
+Correction dans `createSession` : remplacer l'`upsert` par une insertion qui ignore les doublons, puis relire la semaine.
+
+```ts
+await db.week.createMany({ data: [{ startDate }], skipDuplicates: true });
+const week = await db.week.findUniqueOrThrow({ where: { startDate } });
+```
+
+`skipDuplicates` génère un `INSERT ... ON CONFLICT DO NOTHING` : PostgreSQL fait attendre la 2e insertion jusqu'à la fin de la 1re, puis l'ignore, sans erreur. C'est la base qui règle le conflit, via la contrainte @@unique.
+
+### Test des contraintes (SQL brut)
+
+Ces tests envoient du SQL directement, en contournant zod et mes opérations, pour montrer ce que PostgreSQL refuse à lui seul. Un `INSERT` valide sert de témoin, puis chaque cas invalide doit être refusé et ne laisser aucune ligne :
+
+- valeur hors enum : `period`, `student_group`, `mode`, `domain`, `status` ;
+- date impossible (`2026-13-45`) ;
+- titre `NULL` ;
+- clé étrangère vers une semaine ou un formateur inexistant ;
+- code de séance déjà utilisé ;
+- formateur déjà affecté sur le même créneau.
+
+Il vérifie aussi les règles de suppression : supprimer un formateur utilisé est refusé (`onDelete: Restrict`), et supprimer une séance supprime ses acquis (`onDelete: Cascade`).
+
+### Résultat
+
+`npm run test:preuves` enregistre la sortie complète dans `preuves/tests.log` : 60 tests (39 d'opérations, 7 de concurrence, 14 de contraintes).
+
+### Limite
+
+La base garantit les enums, les clés étrangères, les `NOT NULL` et l'unicité du créneau. Elle **n'applique pas** les règles « une séance `AUTO` n'a pas de formateur et reste `proposed` » et « une séance `confirmed` a un formateur » : elles ne sont vérifiées que par zod, car j'ai choisi de ne pas écrire de SQL manuel (`CHECK`) dans la migration. Un `INSERT` SQL direct pourrait donc les contourner. Ajouter ces deux `CHECK` dans la migration serait l'amélioration naturelle. Cependant voilà la limite de Prisma, l'ORM ne gère pas les `CHECK`, j'aurai du générer une migration et la modifier en ajoutant des requêtes SQL directement à l'intérieur mais j'ai choisi de laisser ainsi pour le module.

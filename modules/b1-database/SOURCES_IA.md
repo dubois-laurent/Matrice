@@ -38,7 +38,7 @@ RAS
 
 - src/operations.ts (Voir ligne 232 de JUSTIFICATIONS.md)
 
-## Commit 6 
+## Commit 6 🧪 Concurrency / Constraints
 
 # Contenus générés :
 
@@ -46,6 +46,10 @@ RAS
 - tests/constraints.test.ts
 
 L'IA fait les tests parfaitement.. Et Vitest est simple à lire donc je me suis permis.
+
+## Commit 7 
+
+RAS
 
 
 
