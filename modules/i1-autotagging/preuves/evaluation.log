@@ -1,0 +1,20 @@
+Prédictions sur le jeu evaluation
+
+t01 | Créer un composant React | attendu : web | prédit : web | OK | mots-clés react, composant
+t02 | Améliorer le responsive CSS | attendu : web | prédit : web | OK | mots-clés css, responsive
+t03 | Analyser un CSV avec SQL | attendu : data | prédit : data | OK | mots-clés sql, csv
+t04 | Contrôler la qualité des données | attendu : data | prédit : data | OK | mots-clés donnee
+t05 | Limiter les droits après authentification | attendu : cyber | prédit : cyber | OK | mots-clés authentif, droit
+t06 | Reconnaître une tentative de phishing | attendu : cyber | prédit : cyber | OK | mots-clés phishing
+t07 | Revue collective | attendu : a_revoir | prédit : a_revoir | OK | aucun mot-clé connu
+t08 | (texte vide) | attendu : a_revoir | prédit : a_revoir | OK | texte vide
+
+Matrice de confusion (lignes = attendu, colonnes = prédit)
+
+         web      data     cyber    a_revoir 
+web      2        0        0        0        
+data     0        2        0        0        
+cyber    0        0        2        0        
+a_revoir 0        0        0        2        
+
+Exactitude : 8/8
