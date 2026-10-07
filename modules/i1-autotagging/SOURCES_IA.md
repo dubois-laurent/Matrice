@@ -1,0 +1,1 @@
+Par faute de temps, Presque tout a été généré par IA pour ce module i1, cependant, Je me suis juste permis de simplifier ses itérations car c'était beaucoup trop pour un simple module : score par catégorie / zod / limite de longueur / détection d'injection par expressions régulière, etc..
