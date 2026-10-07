@@ -45,7 +45,7 @@ RAS
 - tests/concurrency.test.ts
 - tests/constraints.test.ts
 
-L'IA fait les tests parfaitement.. Et Vitest est simple à lire donc je me suis permis.
+L'IA fait les tests parfaitement.. Et Vitest est simple à lire donc je me suis permis : Chaque describe répresente une opération.
 
 ## Commit 7 
 
