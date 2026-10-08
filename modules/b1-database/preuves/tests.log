@@ -1,0 +1,135 @@
+
+ RUN  v5.0.3 C:/Users/wtzmo/code/Matrice/modules/b1-database
+
+stdout | tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > deux transactions voient toutes les deux le créneau libre : la base n'en accepte qu'une
+Créneau vu libre par 2 transaction(s) sur 2
+  client 0 : refusé (P2002)
+  client 1 : accepté
+
+ ✓ tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > deux transactions voient toutes les deux le créneau libre : la base n'en accepte qu'une 81ms
+stdout | tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > 8 confirmations simultanées du même formateur sur le même créneau : une seule réussit
+client 0 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 1 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 2 : accepté
+  client 3 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 4 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 5 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 6 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 7 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+
+ ✓ tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > 8 confirmations simultanées du même formateur sur le même créneau : une seule réussit 615ms
+stdout | tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > 6 créations simultanées pour le même formateur et le même créneau : une seule réussit
+client 0 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 1 : accepté
+  client 2 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 3 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 4 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+  client 5 : refusé (Ce formateur est déjà affecté à une séance sur ce créneau (même date et même période))
+
+ ✓ tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > 6 créations simultanées pour le même formateur et le même créneau : une seule réussit 61ms
+ ✓ tests/concurency.test.ts > un formateur ne peut pas avoir 2 séances au même créneau, même en concurrence > 5 créations simultanées avec le même code : une seule réussit 59ms
+ × tests/concurency.test.ts > la contrainte ne bloque que les vrais conflits > 3 formateurs différents sur le même créneau, en même temps : tous acceptés 40ms
+   → expected false to be true // Object.is equality
+ ✓ tests/concurency.test.ts > la contrainte ne bloque que les vrais conflits > le même formateur sur 5 créneaux différents, en même temps : tous acceptés 62ms
+ × tests/concurency.test.ts > la contrainte ne bloque que les vrais conflits > plusieurs séances AUTO sans formateur sur le même créneau : toutes acceptées 45ms
+   → expected false to be true // Object.is equality
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > accepte une séance valide (témoin) 6ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > période hors enum 26ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > groupe hors enum 13ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > mode hors enum 14ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > domaine hors enum 18ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > statut hors enum 14ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > date impossible 15ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > titre NULL 16ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > semaine inexistante (clé étrangère) 15ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > formateur inexistant (clé étrangère) 14ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > code déjà utilisé 11ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > formateur déjà pris sur ce créneau (contrainte unique) 16ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > supprimer un formateur utilisé est refusé (onDelete: Restrict) 16ms
+ ✓ tests/constraints.test.ts > refus par PostgreSQL, sans passer par le code > supprimer une séance supprime ses acquis (onDelete: Cascade) 16ms
+ ✓ tests/operations.test.ts > créer une séance > crée une séance proposée avec son formateur 34ms
+ ✓ tests/operations.test.ts > créer une séance > accepte une séance AUTO sans formateur 10ms
+ ✓ tests/operations.test.ts > créer une séance > rattache la séance au lundi de sa semaine 9ms
+ ✓ tests/operations.test.ts > lister la semaine avec les formateurs > retourne les séances du seed avec leur formateur 8ms
+ ✓ tests/operations.test.ts > lister la semaine avec les formateurs > donne la même semaine quel que soit le jour demandé 5ms
+ ✓ tests/operations.test.ts > lister la semaine avec les formateurs > groupe A : séances A + Promotion 5ms
+ ✓ tests/operations.test.ts > lister la semaine avec les formateurs > groupe B : séances B + Promotion 4ms
+ ✓ tests/operations.test.ts > lister la semaine avec les formateurs > trie par date puis par période 3ms
+ ✓ tests/operations.test.ts > confirmer une affectation > confirme une séance dont le formateur est déjà assigné 21ms
+ ✓ tests/operations.test.ts > confirmer une affectation > affecte un formateur au moment de confirmer 16ms
+ ✓ tests/operations.test.ts > confirmer une affectation > refuse de confirmer sans formateur 12ms
+ ✓ tests/operations.test.ts > confirmer une affectation > refuse de confirmer une séance AUTO 4ms
+ ✓ tests/operations.test.ts > confirmer une affectation > refuse une séance ou un formateur inconnu 4ms
+ ✓ tests/operations.test.ts > un formateur ne peut pas avoir 2 séances sur le même créneau > refuse la création d'une 2e séance au même créneau 24ms
+ ✓ tests/operations.test.ts > un formateur ne peut pas avoir 2 séances sur le même créneau > refuse la confirmation qui créerait un conflit 14ms
+ ✓ tests/operations.test.ts > un formateur ne peut pas avoir 2 séances sur le même créneau > autorise le même formateur sur une autre période 10ms
+ ✓ tests/operations.test.ts > heures par formateur > compte 4 h par séance confirmée 50ms
+ ✓ tests/operations.test.ts > heures par formateur > ne compte pas les séances proposées 3ms
+ ✓ tests/operations.test.ts > heures par formateur > retourne 0 h pour une semaine sans séance 2ms
+ ✓ tests/operations.test.ts > acquis validés > ne retourne que les acquis validés, avec leur date 32ms
+ ✓ tests/operations.test.ts > acquis validés > sans filtre, retourne les acquis validés de toutes les séances 4ms
+ ✓ tests/operations.test.ts > acquis validés > un acquis non validé n'a pas de date de validation 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > période inconnue 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > groupe inconnu 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > mode inconnu 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > domaine inconnu 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > date impossible 3ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > date au mauvais format 3ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > titre vide 3ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > code vide 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > champs manquants 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > entrée qui n'est pas un objet 3ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > AUTO avec formateur 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > AUTO déjà confirmée 1ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > confirmée sans formateur 1ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > formateur inconnu 4ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > code déjà utilisé 10ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > refuse un acquis au libellé vide ou sur une séance inconnue 2ms
+ ✓ tests/operations.test.ts > entrées invalides refusées > refuse une semaine invalide 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/concurency.test.ts > la contrainte ne bloque que les vrais conflits > 3 formateurs différents sur le même créneau, en même temps : tous acceptés
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/concurency.test.ts:154:60
+    152|       ),
+    153|     );
+    154|     expect(results.every((r) => r.status === "fulfilled")).toBe(true);
+       |                                                            ^
+    155|   });
+    156|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/concurency.test.ts > la contrainte ne bloque que les vrais conflits > plusieurs séances AUTO sans formateur sur le même créneau : toutes acceptées
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/concurency.test.ts:178:60
+    176|       ),
+    177|     );
+    178|     expect(results.every((r) => r.status === "fulfilled")).toBe(true);
+       |                                                            ^
+    179|   });
+    180| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 58 passed (60)
+   Start at  16:23:16
+   Duration  2.67s (tests 83%, import 13%, transform 3%)
+
