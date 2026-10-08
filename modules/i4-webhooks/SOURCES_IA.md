@@ -1,0 +1,1 @@
+J'ai fais la même chose que pour le module i1 auto-tagging, j'ai beaucoup conversé avec l'IA afin qui me génère une application concrète et je me suis permis par la suite de tout simplifier car l'IA en "faisait trop" : Il a commencé a faire des modules séparés, des fichiers configs.. Un script de démo.. Et j'ai compressé les tests à 29 au lieu des 69 initiaux.
